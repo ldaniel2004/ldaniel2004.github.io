@@ -51,7 +51,7 @@ body {
 a { color: var(--accent); }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-.wrap { max-width: 1040px; margin: 0 auto; padding: 32px 20px 64px; display: grid; gap: 24px; }
+.wrap { max-width: 1480px; margin: 0 auto; padding: 32px 20px 64px; display: grid; gap: 24px; }
 
 .sheet { background: var(--sheet); border: 1.5px solid var(--ink); }
 
@@ -85,7 +85,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .sec-body { padding: 24px; display: grid; gap: 24px; }
 
 /* Featured project */
-.feature { display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; align-items: start; }
+.feature { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 40px; align-items: start; }
 .feature h3 { font: 600 2rem/1.05 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
 .feature p { margin: 0 0 12px; max-width: 62ch; }
 .figure { border: 1px solid var(--line); padding: 12px; display: grid; gap: 8px; }
@@ -98,7 +98,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .tag { font: 500 0.75rem/1 var(--font-mono); padding: 6px 8px; border: 1px solid var(--ink); text-transform: uppercase; letter-spacing: 0.04em; }
 
 /* Other projects */
-.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.grid3 { columns: 320px; column-gap: 16px; }
+.grid3 > .card { break-inside: avoid; margin: 0 0 16px; width: 100%; }
 .card { border: 1px solid var(--line); padding: 16px; display: grid; gap: 8px; align-content: start; }
 .card h4 { font: 600 1.3rem/1.1 var(--font-display); margin: 0; }
 .card p { margin: 0; font-size: 0.95rem; color: var(--muted); }
@@ -120,6 +121,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .gallery.wide img { aspect-ratio: 16 / 9; }
 .gallery.wide .lead img { aspect-ratio: auto; max-height: none; object-fit: contain; }
 .card .gallery { grid-template-columns: 1fr 1fr; }
+.gallery.five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 760px) { .gallery.five { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .role-photo { margin-top: 12px; max-width: 220px; }
 dialog.lightbox { border: 1.5px solid var(--ink); padding: 0; background: var(--sheet); max-width: min(92vw, 1100px); max-height: 92vh; }
 dialog.lightbox::backdrop { background: rgb(10 15 22 / 0.8); }
@@ -258,7 +261,7 @@ footer { font: 0.75rem var(--font-mono); color: var(--muted); text-align: right;
           </ul>
         </div>
         <figure class="figure">
-          <div class="gallery">
+          <div class="gallery five">
             <button type="button" class="lead" data-cap="Finished carbon fiber sidepod"><img src="img/sidepod-carbon.jpg" alt="Finished carbon fiber sidepod" loading="lazy"></button>
             <button type="button" data-cap="3D printed mold sections laid out before assembly"><img src="img/sidepod-molds-printed.jpg" alt="3D printed mold sections laid out before assembly" loading="lazy"></button>
             <button type="button" data-cap="Assembled left and right mold halves"><img src="img/sidepod-mold-halves.jpg" alt="Assembled left and right mold halves" loading="lazy"></button>
