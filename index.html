@@ -192,6 +192,17 @@ dialog.lightbox .lb-bar button { font: 500 0.8rem var(--font-mono); background: 
   .change .metric, .change .mfg { grid-column: 2; }
 }
  
+ 
+.process { display: grid; gap: 8px; }
+.process-row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+.step { margin: 0; display: grid; gap: 6px; align-content: start; }
+.shot-btn-step { all: unset; cursor: zoom-in; display: block; border: 1px solid var(--line); background: var(--paper); overflow: hidden; }
+.shot-btn-step:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.shot-btn-step img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.step figcaption { font-size: 0.85rem; line-height: 1.35; color: var(--muted); }
+.step-num { font: 600 0.8rem var(--font-mono); color: var(--accent); margin-right: 4px; }
+@media (max-width: 900px) { .process-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+ 
 /* Experience */
 .roles { display: grid; gap: 0; }
 .role { display: grid; grid-template-columns: 12rem 1fr; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--line); }
@@ -261,16 +272,40 @@ footer { font: 0.75rem var(--font-mono); color: var(--muted); text-align: right;
           </ul>
         </div>
         <figure class="figure">
-          <div class="gallery five">
+          <div class="gallery">
             <button type="button" class="lead" data-cap="Finished carbon fiber sidepod"><img src="img/sidepod-carbon.jpg" alt="Finished carbon fiber sidepod" loading="lazy"></button>
-            <button type="button" data-cap="3D printed mold sections laid out before assembly"><img src="img/sidepod-molds-printed.jpg" alt="3D printed mold sections laid out before assembly" loading="lazy"></button>
-            <button type="button" data-cap="Assembled left and right mold halves"><img src="img/sidepod-mold-halves.jpg" alt="Assembled left and right mold halves" loading="lazy"></button>
-            <button type="button" data-cap="Assembled mold, seams reinforced"><img src="img/sidepod-mold-reinforced.jpg" alt="Assembled mold, seams reinforced" loading="lazy"></button>
-            <button type="button" data-cap="Mold surface finished and coated"><img src="img/sidepod-mold-surface.jpg" alt="Mold surface finished and coated" loading="lazy"></button>
-            <button type="button" data-cap="Carbon sidepod after demolding"><img src="img/sidepod-demolded.jpg" alt="Carbon sidepod after demolding" loading="lazy"></button>
           </div>
-          <figcaption>FIG. 1 · From printed mold sections to the finished carbon sidepod. Click any photo to enlarge.</figcaption>
+          <figcaption>FIG. 1 · Finished carbon fiber sidepod.</figcaption>
         </figure>
+      </div>
+      <div class="process" aria-label="Sidepod production process">
+        <span class="label">Process</span>
+        <div class="process-row">
+        <figure class="step">
+          <button type="button" class="shot-btn-step" data-cap="Step 1: Mold designed in SolidWorks and split into printable sections"><img src="img/sidepod-cad-mold.jpg" alt="Mold designed in SolidWorks and split into printable sections" loading="lazy"></button>
+          <figcaption><span class="step-num">01</span> Mold designed in SolidWorks and split into printable sections</figcaption>
+        </figure>
+        <figure class="step">
+          <button type="button" class="shot-btn-step" data-cap="Step 2: Sections 3D printed"><img src="img/sidepod-molds-printed.jpg" alt="Sections 3D printed" loading="lazy"></button>
+          <figcaption><span class="step-num">02</span> Sections 3D printed</figcaption>
+        </figure>
+        <figure class="step">
+          <button type="button" class="shot-btn-step" data-cap="Step 3: Sections assembled into left and right mold halves"><img src="img/sidepod-mold-halves.jpg" alt="Sections assembled into left and right mold halves" loading="lazy"></button>
+          <figcaption><span class="step-num">03</span> Sections assembled into left and right mold halves</figcaption>
+        </figure>
+        <figure class="step">
+          <button type="button" class="shot-btn-step" data-cap="Step 4: Seams filled and reinforced"><img src="img/sidepod-mold-reinforced.jpg" alt="Seams filled and reinforced" loading="lazy"></button>
+          <figcaption><span class="step-num">04</span> Seams filled and reinforced</figcaption>
+        </figure>
+        <figure class="step">
+          <button type="button" class="shot-btn-step" data-cap="Step 5: Mold surface coated and finished"><img src="img/sidepod-mold-surface.jpg" alt="Mold surface coated and finished" loading="lazy"></button>
+          <figcaption><span class="step-num">05</span> Mold surface coated and finished</figcaption>
+        </figure>
+        <figure class="step">
+          <button type="button" class="shot-btn-step" data-cap="Step 6: Carbon layup cured and demolded"><img src="img/sidepod-demolded.jpg" alt="Carbon layup cured and demolded" loading="lazy"></button>
+          <figcaption><span class="step-num">06</span> Carbon layup cured and demolded</figcaption>
+        </figure>
+        </div>
       </div>
  
       <hr class="divider">
@@ -578,7 +613,7 @@ footer { font: 0.75rem var(--font-mono); color: var(--muted); text-align: right;
   var dlg = document.getElementById('lightbox');
   var img = document.getElementById('lb-img');
   var cap = document.getElementById('lb-cap');
-  document.querySelectorAll('.gallery button, .shot-btn').forEach(function (b) {
+  document.querySelectorAll('.gallery button, .shot-btn, .shot-btn-step').forEach(function (b) {
     b.addEventListener('click', function () {
       var i = b.querySelector('img');
       img.src = i.src; img.alt = i.alt; cap.textContent = b.dataset.cap;
