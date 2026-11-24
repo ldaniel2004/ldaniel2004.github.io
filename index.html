@@ -230,6 +230,14 @@ footer { font: 0.75rem var(--font-mono); color: var(--muted); text-align: right;
   .specs li { grid-template-columns: 1fr; gap: 2px; }
 }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+ 
+/* Rounded corners */
+:root { --r-lg: 10px; --r-md: 6px; --r-sm: 4px; }
+.sheet { border-radius: var(--r-lg); overflow: hidden; }
+.card, .figure, .shot, .view-row .shot-frame, .shot-frame.has-img { border-radius: var(--r-md); overflow: hidden; }
+.gallery button, .shot-btn-step { border-radius: var(--r-sm); }
+.tag { border-radius: var(--r-sm); }
+dialog.lightbox { border-radius: var(--r-lg); overflow: hidden; }
 </style>
 </head>
 <body>
