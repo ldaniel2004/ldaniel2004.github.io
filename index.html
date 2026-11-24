@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leo Daniel Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: an engineering drawing sheet. Title block header, numbered sheets for sections, mono callouts for specs. */
+:root {
+  --paper: #f3f5f7;
+  --sheet: #ffffff;
+  --ink: #14202e;
+  --muted: #5b6878;
+  --line: #cfd6de;
+  --accent: #1f5fd1;
+  --todo: #b45309;
+  --todo-bg: #fff7ed;
+  --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0e141b; --sheet: #151d27; --ink: #e6ebf1; --muted: #93a1b2;
+    --line: #2a3644; --accent: #6b9cff; --todo: #fbbf24; --todo-bg: #2a2110;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0e141b; --sheet: #151d27; --ink: #e6ebf1; --muted: #93a1b2;
+  --line: #2a3644; --accent: #6b9cff; --todo: #fbbf24; --todo-bg: #2a2110;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--paper);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
+  color: var(--ink);
+  font: 16px/1.6 var(--font-body);
+}
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.wrap { max-width: 1040px; margin: 0 auto; padding: 32px 20px 64px; display: grid; gap: 24px; }
+
+.sheet { background: var(--sheet); border: 1.5px solid var(--ink); }
+
+/* Title block */
+.title-block { display: grid; grid-template-columns: 2fr 1fr; }
+.tb-main { padding: 32px; border-right: 1.5px solid var(--ink); display: grid; gap: 12px; }
+.tb-main h1 {
+  font: 700 clamp(3rem, 9vw, 5.5rem)/0.9 var(--font-display);
+  letter-spacing: 0.01em; margin: 0; text-transform: uppercase; text-wrap: balance;
+}
+.tb-main p { margin: 0; max-width: 60ch; font-size: 1.1rem; }
+.tb-cells { display: grid; grid-template-rows: repeat(4, auto); }
+.cell { padding: 12px 16px; border-bottom: 1px solid var(--line); display: grid; gap: 2px; }
+.cell:last-child { border-bottom: none; }
+.label { font: 500 0.7rem/1.2 var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.value { font-weight: 500; }
+.links { display: flex; gap: 16px; flex-wrap: wrap; font: 500 0.9rem var(--font-mono); }
+
+.todo {
+  color: var(--todo); background: var(--todo-bg);
+  border: 1px dashed var(--todo); padding: 0 6px; border-radius: 3px;
+  font-family: var(--font-mono); font-size: 0.85em; font-weight: 500;
+}
+
+/* Section sheets */
+.sec-head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap;
+  padding: 12px 24px; border-bottom: 1.5px solid var(--ink);
+}
+.sec-head h2 { font: 600 1.6rem/1 var(--font-display); text-transform: uppercase; letter-spacing: 0.04em; margin: 0; }
+.sec-body { padding: 24px; display: grid; gap: 24px; }
+
+/* Featured project */
+.feature { display: grid; grid-template-columns: 1.1fr 1fr; gap: 32px; align-items: start; }
+.feature h3 { font: 600 2rem/1.05 var(--font-display); margin: 0 0 8px; text-wrap: balance; }
+.feature p { margin: 0 0 12px; max-width: 62ch; }
+.figure { border: 1px solid var(--line); padding: 12px; display: grid; gap: 8px; }
+.figure svg { width: 100%; height: auto; display: block; }
+.figure figcaption { font: 0.75rem/1.4 var(--font-mono); color: var(--muted); }
+.specs { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.specs li { display: grid; grid-template-columns: 9rem 1fr; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 0.95rem; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag { font: 500 0.75rem/1 var(--font-mono); padding: 6px 8px; border: 1px solid var(--ink); text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* Other projects */
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.card { border: 1px solid var(--line); padding: 16px; display: grid; gap: 8px; align-content: start; }
+.card h4 { font: 600 1.3rem/1.1 var(--font-display); margin: 0; }
+.card p { margin: 0; font-size: 0.95rem; color: var(--muted); }
+
+/* Skills */
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+.skills h4 { margin: 0 0 8px; }
+.skills ul { margin: 0; padding-left: 18px; }
+
+
+
+/* Photos */
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.gallery .lead { grid-column: 1 / -1; }
+.gallery button { all: unset; cursor: zoom-in; display: block; border: 1px solid var(--line); background: var(--paper); overflow: hidden; }
+.gallery button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.gallery img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 3 / 4; }
+.gallery .lead img { aspect-ratio: auto; max-height: 420px; object-fit: cover; }
+.gallery.wide img { aspect-ratio: 16 / 9; }
+.gallery.wide .lead img { aspect-ratio: auto; max-height: none; object-fit: contain; }
+.card .gallery { grid-template-columns: 1fr 1fr; }
+.role-photo { margin-top: 12px; max-width: 220px; }
+dialog.lightbox { border: 1.5px solid var(--ink); padding: 0; background: var(--sheet); max-width: min(92vw, 1100px); max-height: 92vh; }
+dialog.lightbox::backdrop { background: rgb(10 15 22 / 0.8); }
+dialog.lightbox img { display: block; max-width: 100%; max-height: calc(92vh - 48px); margin: 0 auto; }
+dialog.lightbox .lb-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px 12px; font: 0.8rem var(--font-mono); color: var(--muted); border-top: 1px solid var(--line); }
+dialog.lightbox .lb-bar button { font: 500 0.8rem var(--font-mono); background: none; border: 1px solid var(--ink); color: var(--ink); padding: 4px 10px; cursor: pointer; }
+
+
+/* Photo wall */
+.wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+.wall button img { aspect-ratio: 1 / 1; }
+
+
+/* Aero package comparison */
+.compare { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+.shot { border: 1px solid var(--line); display: grid; grid-template-rows: auto 1fr; }
+.shot .shot-head { display: flex; justify-content: space-between; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+.shot .shot-head strong { font: 600 1.15rem/1.1 var(--font-display); text-transform: uppercase; letter-spacing: 0.04em; }
+.shot.now .shot-head strong { color: var(--accent); }
+.shot-frame { aspect-ratio: 16 / 10; display: grid; place-items: center; padding: 16px; text-align: center;
+  background-image: repeating-linear-gradient(135deg, transparent 0 10px, color-mix(in srgb, var(--line) 45%, transparent) 10px 11px); }
+.shot { min-width: 0; overflow: hidden; }
+.shot-frame.has-img { padding: 0; background: linear-gradient(90deg, #f4f4f7, #d4d6e0); display: block; position: relative; overflow: hidden; }
+.shot-btn { all: unset; cursor: zoom-in; position: absolute; inset: 0; display: block; }
+.shot-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.shot-btn img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: 100%; object-fit: contain; display: block; }
+
+.views { display: grid; gap: 16px; }
+.views-head { display: grid; grid-template-columns: 7rem minmax(0,1fr) minmax(0,1fr); gap: 16px; border-bottom: 1.5px solid var(--ink); padding-bottom: 8px; }
+.views-head strong { font: 600 1.1rem/1 var(--font-display); text-transform: uppercase; letter-spacing: 0.04em; }
+.views-head strong.now { color: var(--accent); }
+.view-row { display: grid; grid-template-columns: 7rem minmax(0,1fr) minmax(0,1fr); gap: 16px; align-items: center; }
+.view-row .shot-frame { border: 1px solid var(--line); }
+.view-row.v-side .shot-frame { aspect-ratio: 2.4 / 1; }
+.view-row.v-front .shot-frame, .view-row.v-rear .shot-frame { aspect-ratio: 4 / 3; }
+.view-row.v-angle .shot-frame { aspect-ratio: 16 / 9; }
+.view-row.v-top .shot-frame { aspect-ratio: 3 / 4; max-height: 520px; justify-self: center; width: 100%; }
+@media (max-width: 760px) {
+  .views-head { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+  .views-head > :first-child { display: none; }
+  .view-row { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 8px; }
+  .view-row > .label { grid-column: 1 / -1; }
+}
+.changes { border-top: 1.5px solid var(--ink); }
+.change { display: grid; grid-template-columns: 2.5rem 1.2fr 1.6fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.change .num { font: 600 1.6rem/1 var(--font-display); color: var(--muted); }
+.change h3 { font: 600 1.35rem/1.1 var(--font-display); margin: 0 0 4px; }
+.change p { margin: 0; color: var(--muted); font-size: 0.95rem; max-width: 50ch; }
+.metric { display: grid; gap: 6px; }
+.metric .mhead { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.delta { font: 600 0.85rem var(--font-mono); color: var(--accent); font-variant-numeric: tabular-nums; }
+.bar-row { display: grid; grid-template-columns: 5.5rem 1fr 3.5rem; gap: 8px; align-items: center; font: 0.8rem var(--font-mono); font-variant-numeric: tabular-nums; }
+.bar-row .track { height: 10px; background: color-mix(in srgb, var(--line) 50%, transparent); }
+.bar-row .fill { height: 100%; background: var(--muted); }
+.bar-row.now .fill { background: var(--accent); }
+.bar-row .val { text-align: right; }
+.bar-row.now .val { color: var(--ink); font-weight: 500; }
+.change > *, .compare > *, .metric, .metric > * { min-width: 0; }
+.change { grid-template-columns: 2.5rem minmax(0, 1.2fr) minmax(0, 1.6fr); }
+.bar-row { grid-template-columns: 5.5rem minmax(0, 1fr) 3.5rem; }
+.change p, .change h3 { overflow-wrap: anywhere; }
+.mfg { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font: 0.85rem var(--font-mono); }
+.mfg .arrow { color: var(--accent); font-weight: 600; }
+@media (max-width: 760px) {
+  .compare { grid-template-columns: 1fr; }
+  .change { grid-template-columns: 2rem minmax(0, 1fr); }
+  .change .metric, .change .mfg { grid-column: 2; }
+}
+
+/* Experience */
+.roles { display: grid; gap: 0; }
+.role { display: grid; grid-template-columns: 12rem 1fr; gap: 24px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.role:first-child { padding-top: 0; }
+.role:last-child { border-bottom: none; padding-bottom: 0; }
+.role h3 { font: 600 1.35rem/1.1 var(--font-display); margin: 0 0 6px; }
+.role ul, .card ul, .feature ul.points { margin: 0; padding-left: 18px; max-width: 64ch; }
+.role li, .card li, .feature ul.points li { margin-bottom: 4px; }
+.when { font: 500 0.8rem/1.4 var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.divider { border: none; border-top: 1px solid var(--line); margin: 0; }
+.status { color: var(--accent); }
+@media (max-width: 760px) { .role { grid-template-columns: 1fr; gap: 4px; } }
+
+footer { font: 0.75rem var(--font-mono); color: var(--muted); text-align: right; }
+
+@media (max-width: 760px) {
+  .title-block, .feature { grid-template-columns: 1fr; }
+  .tb-main { border-right: none; border-bottom: 1.5px solid var(--ink); padding: 24px; }
+  .specs li { grid-template-columns: 1fr; gap: 2px; }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+
+  <header class="sheet title-block">
+    <div class="tb-main">
+      <span class="label">Portfolio · Mechanical Engineering</span>
+      <h1>Leo Daniel</h1>
+      <p>Mechanical engineering student at the University of Missouri and Aerodynamics &amp; Composites Lead for Mizzou Racing Formula SAE. I simulate aero parts in Star-CCM+, check them with FEA, and build them in carbon fiber. At the Mizzou 3D Print Lab, I work with customers to turn their ideas into printed parts.</p>
+      <div class="links">
+        <a href="#projects">Projects</a>
+        <a href="#aero">Aero Package</a>
+        <a href="#experience">Experience</a>
+        <a href="#photos">Photos</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="tb-cells">
+      <div class="cell"><span class="label">Degree</span><span class="value">B.S. Mechanical Engineering<br>Minors: Aerospace Eng., Mathematics</span></div>
+      <div class="cell"><span class="label">School</span><span class="value">University of Missouri, Columbia</span></div>
+      <div class="cell"><span class="label">Graduation · GPA</span><span class="value">May 2027 · 3.78</span></div>
+      <div class="cell"><span class="label">Status</span><span class="value status">Seeking full-time roles</span></div>
+    </div>
+  </header>
+
+  <section class="sheet" id="projects">
+    <div class="sec-head"><h2>Projects</h2><span class="label">Sheet 01</span></div>
+    <div class="sec-body">
+
+      <div class="feature">
+        <div>
+          <span class="label">Mizzou Racing FSAE · Aero + Cooling</span>
+          <h3>Sidepod Design and Production</h3>
+          <p>Designed and built the car's sidepods, which shape the airflow feeding the radiator.</p>
+          <ul class="points">
+            <li>Simulated airflow through the radiator in Star-CCM+.</li>
+            <li>Calculated aerodynamic properties of each design iteration and radiator orientation in Excel.</li>
+            <li>Managed production and assembly of the 3D printed mold parts.</li>
+            <li>Led the layup to manufacture the carbon fiber components.</li>
+          </ul>
+          <ul class="specs">
+            <li><span class="label">Tools</span><span>Star-CCM+, Excel, 3D printing</span></li>
+            <li><span class="label">Material</span><span>Carbon fiber on 3D printed molds</span></li>
+          </ul>
+        </div>
+        <figure class="figure">
+          <div class="gallery">
+            <button type="button" class="lead" data-cap="Finished carbon fiber sidepod"><img src="img/sidepod-carbon.jpg" alt="Finished carbon fiber sidepod" loading="lazy"></button>
+            <button type="button" data-cap="3D printed mold sections laid out before assembly"><img src="img/sidepod-molds-printed.jpg" alt="3D printed mold sections laid out before assembly" loading="lazy"></button>
+            <button type="button" data-cap="Assembled left and right mold halves"><img src="img/sidepod-mold-halves.jpg" alt="Assembled left and right mold halves" loading="lazy"></button>
+            <button type="button" data-cap="Assembled mold, seams reinforced"><img src="img/sidepod-mold-reinforced.jpg" alt="Assembled mold, seams reinforced" loading="lazy"></button>
+            <button type="button" data-cap="Mold surface finished and coated"><img src="img/sidepod-mold-surface.jpg" alt="Mold surface finished and coated" loading="lazy"></button>
+            <button type="button" data-cap="Carbon sidepod after demolding"><img src="img/sidepod-demolded.jpg" alt="Carbon sidepod after demolding" loading="lazy"></button>
+          </div>
+          <figcaption>FIG. 1 · From printed mold sections to the finished carbon sidepod. Click any photo to enlarge.</figcaption>
+        </figure>
+      </div>
+
+      <hr class="divider">
+
+      <div class="grid3">
+        <article class="card">
+          <span class="label">Mizzou Racing FSAE</span>
+          <h4>Steering Wheel Design and Production</h4>
+          <ul>
+            <li>Designed every component on the steering wheel.</li>
+            <li>Ran FEA on the baseplate in SolidWorks Simulation.</li>
+            <li>Worked with other subteams on the final design and assembly.</li>
+          </ul>
+          <div class="gallery">
+            <button type="button" class="lead" data-cap="Steering wheel installed on car #115"><img src="img/steering-wheel-installed.jpg" alt="Steering wheel installed on car #115" loading="lazy"></button>
+            <button type="button" data-cap="Steering wheel, front"><img src="img/steering-wheel-front.jpg" alt="Steering wheel, front" loading="lazy"></button>
+            <button type="button" data-cap="Steering wheel, back with quick release"><img src="img/steering-wheel-back.jpg" alt="Steering wheel, back with quick release" loading="lazy"></button>
+          </div>
+        </article>
+        <article class="card">
+          <span class="label">Mizzou Racing FSAE · Composites repair</span>
+          <h4>Front Wing Reconstruction</h4>
+          <ul>
+            <li>Repaired the front wing after its internal structure bent and the secondary and tertiary elements began peeling off their ribs.</li>
+            <li>Reassembled the secondary and tertiary elements onto their ribs.</li>
+            <li>Built a new front wing main element with help from my aero lead.</li>
+            <li>Helped reassemble the full front wing with new internals.</li>
+          </ul>
+          <div class="gallery">
+            <button type="button" class="lead" data-cap="Front wing internal rib structure"><img src="img/front-wing-ribs-1.jpg" alt="Front wing internal rib structure" loading="lazy"></button>
+            <button type="button" data-cap="Front wing ribs and spar"><img src="img/front-wing-ribs-2.jpg" alt="Front wing ribs and spar" loading="lazy"></button>
+            <button type="button" data-cap="Element skin bonded to a rib"><img src="img/front-wing-rib-closeup.jpg" alt="Element skin bonded to a rib" loading="lazy"></button>
+          </div>
+        </article>
+        <article class="card">
+          <span class="label">Mizzou Racing FSAE · Composites</span>
+          <h4>Nosecone Mold Design</h4>
+          <ul>
+            <li>Designed the mold and was head of production.</li>
+            <li>Designed a 3D printed PLA mold for laying up a fiberglass plug, which served as the female mold for the nosecone.</li>
+            <li>Made the nosecone tip separately on its own male mold so it could be produced easily.</li>
+            <li>Set the finished tip into the fiberglass mold, then completed the nosecone layup around it.</li>
+          </ul>
+          <div class="gallery">
+            <button type="button" data-cap="Nosecone mold in CAD, split into printable sections"><img src="img/nosecone-cad-exploded.jpg" alt="Nosecone mold in CAD, split into printable sections" loading="lazy"></button>
+            <button type="button" data-cap="PLA mold for the nosecone fiberglass plug"><img src="img/sidepod-mold-finished.jpg" alt="PLA mold for the nosecone fiberglass plug" loading="lazy"></button>
+          </div>
+        </article>
+        <article class="card">
+          <span class="label">Mizzou Racing FSAE · Aero</span>
+          <h4>Undertray Flow Directors</h4>
+          <p>Flow directors on the undertray that create outwash in front of the rear tires.</p>
+          <ul>
+            <li>Designed the mold and completed production.</li>
+            <li>Used liquid PVA as a release layer between the carbon and the 3D printed mold.</li>
+          </ul>
+          <div class="gallery">
+            <button type="button" data-cap="3D printed flow director mold coated in liquid PVA"><img src="img/flow-director-mold-pva.jpg" alt="3D printed flow director mold coated in liquid PVA" loading="lazy"></button>
+            <button type="button" data-cap="Undertray flow director layup in the mold"><img src="img/sidepod-layup.jpg" alt="Undertray flow director layup in the mold" loading="lazy"></button>
+          </div>
+        </article>
+        <article class="card">
+          <span class="label">Mizzou Racing FSAE · CFD workflow</span>
+          <h4>Running CFD on the Supercomputer</h4>
+          <ul>
+            <li>Moving Star-CCM+ Design Manager studies from local machines to the Hellbender cluster.</li>
+            <li>Set up post-processing to run automatically when each sim finishes, without a separate job.</li>
+            <li>Built a run routine that works within the cluster's storage quota.</li>
+            <li>Created a simulation template that streamlines setting up new sims.</li>
+          </ul>
+        </article>
+        <article class="card">
+          <span class="label">Client project</span>
+          <h4>Dog Bowl Redesign</h4>
+          <ul>
+            <li>Redesigned a client's existing bowl for a new use.</li>
+            <li>Built and tested several mechanical approaches to the client's goal.</li>
+            <li>Ran a client-focused process with continuous feedback as requirements changed.</li>
+          </ul>
+        </article>
+      </div>
+
+      <hr class="divider">
+
+      <div class="feature">
+        <div>
+          <span class="label">Personal project · Electronics</span>
+          <h3>Custom Split Keyboard</h3>
+          <p>Standard keyboards made my hands hurt after long sessions, so I designed and built an ergonomic split keyboard with a separate numpad module. I did everything from the layout to the firmware.</p>
+          <ul class="points">
+            <li>Generated the switch layout and initial PCBs in Ergogen.</li>
+            <li>Routed all three PCBs in KiCad, iterating on footprint placement until routing was clean.</li>
+            <li>Ordered the parts and hand-soldered every board.</li>
+            <li>Set up the firmware in ZMK and did all the debugging myself.</li>
+          </ul>
+          <ul class="specs">
+            <li><span class="label">Tools</span><span>Ergogen, KiCad, ZMK</span></li>
+            <li><span class="label">Build</span><span>3 PCBs, hand-soldered</span></li>
+          </ul>
+        </div>
+        <figure class="figure">
+          <div class="gallery wide">
+            <button type="button" class="lead" data-cap="Finished split keyboard with numpad"><img src="img/keyboard-finished.jpg" alt="Finished split keyboard with numpad" loading="lazy"></button>
+            <button type="button" data-cap="Switch plate layout"><img src="img/keyboard-plate.jpg" alt="Switch plate layout" loading="lazy"></button>
+            <button type="button" data-cap="PCB layout, one half"><img src="img/keyboard-pcb-left.jpg" alt="PCB layout, one half" loading="lazy"></button>
+            <button type="button" data-cap="Assembled PCBs"><img src="img/keyboard-pcbs.jpg" alt="Assembled PCBs" loading="lazy"></button>
+          </div>
+          <figcaption>FIG. 2 · Plate layout, PCB routing and finished build.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="aero">
+    <div class="sec-head"><h2>Aero Package: Last Year vs. This Year</h2><span class="label">Sheet 02</span></div>
+    <div class="sec-body">
+      <p style="margin:0;max-width:65ch">Mizzou Racing's aero package for this season compared with last year's car.</p>
+      <div class="compare">
+        <figure class="shot" style="margin:0">
+          <div class="shot-head"><strong>Last year</strong><span class="label">Car #115 · Isometric</span></div>
+          <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #115 (last year), isometric view"><img src="img/car115-front-angle.jpg" alt="Car #115 (last year), isometric view"></button></div>
+        </figure>
+        <figure class="shot now" style="margin:0">
+          <div class="shot-head"><strong>This year</strong><span class="label">Car #84 · Isometric</span></div>
+          <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #84 (this year), isometric view"><img src="img/car84-front-angle.jpg" alt="Car #84 (this year), isometric view"></button></div>
+        </figure>
+      </div>
+      <div class="changes">
+        <div class="change">
+          <span class="num">01</span>
+          <div><h3>Front Wing</h3><p>Complete redesign. Set the secondary and tertiary elements at a more aggressive angle of attack and made the main element closer to 2D than the previous design.</p></div>
+          <div class="metric">
+            <div class="mhead"><span class="label">Downforce coefficient (−C<sub>L</sub>)</span><span class="delta">+45.7% · more downforce</span></div>
+            <div class="bar-row"><span>Last year</span><span class="track"><span class="fill" style="display:block;width:65.7%"></span></span><span class="val">0.92</span></div>
+            <div class="bar-row now"><span>This year</span><span class="track"><span class="fill" style="display:block;width:95.7%"></span></span><span class="val">1.34</span></div>
+          </div>
+        </div>
+        <div class="change">
+          <span class="num">02</span>
+          <div><h3>Undertray</h3><p>Complete redesign. Worked an airfoil profile into the venturi tunnels and reshaped the inlet, choke and outlet profiles to make the part easier to manufacture.</p></div>
+          <div class="metric">
+            <div class="mhead"><span class="label">Downforce coefficient (−C<sub>L</sub>)</span><span class="delta">+32.4% · more downforce</span></div>
+            <div class="bar-row"><span>Last year</span><span class="track"><span class="fill" style="display:block;width:48.6%"></span></span><span class="val">0.68</span></div>
+            <div class="bar-row now"><span>This year</span><span class="track"><span class="fill" style="display:block;width:64.3%"></span></span><span class="val">0.90</span></div>
+          </div>
+        </div>
+        <div class="change">
+          <span class="num">03</span>
+          <div><h3>Rear Wing</h3><p>Changed the 5th element to a less cambered airfoil (AH 79-100C → MSHD) and added a cut in the endplate to create outwash vortices.</p></div>
+          <div class="metric">
+            <div class="mhead"><span class="label">Drag coefficient (C<sub>D</sub>)</span><span class="delta">−9.3% · less drag</span></div>
+            <div class="bar-row"><span>Last year</span><span class="track"><span class="fill" style="display:block;width:92.9%"></span></span><span class="val">0.697</span></div>
+            <div class="bar-row now"><span>This year</span><span class="track"><span class="fill" style="display:block;width:84.3%"></span></span><span class="val">0.632</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="views">
+        <div class="views-head"><span class="label">View</span><strong>Last year · #115</strong><strong class="now">This year · #84</strong></div>
+        <div class="view-row v-front">
+          <span class="label">Front</span>
+          <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #115 (last year), front view"><img src="img/car115-front.jpg" alt="Car #115 (last year), front view" loading="lazy"></button></div>
+          <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #84 (this year), front view"><img src="img/car84-front.jpg" alt="Car #84 (this year), front view" loading="lazy"></button></div>
+        </div>
+        <div class="view-row v-side">
+          <span class="label">Side</span>
+          <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #115 (last year), side view"><img src="img/car115-side.jpg" alt="Car #115 (last year), side view" loading="lazy"></button></div>
+          <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #84 (this year), side view"><img src="img/car84-side.jpg" alt="Car #84 (this year), side view" loading="lazy"></button></div>
+        </div>
+        <div class="view-row v-rear">
+          <span class="label">Rear</span>
+          <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #115 (last year), rear view"><img src="img/car115-back.jpg" alt="Car #115 (last year), rear view" loading="lazy"></button></div>
+          <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #84 (this year), rear view"><img src="img/car84-rear.jpg" alt="Car #84 (this year), rear view" loading="lazy"></button></div>
+        </div>
+        <div class="view-row v-top">
+          <span class="label">Top</span>
+          <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #115 (last year), top view"><img src="img/car115-top.jpg" alt="Car #115 (last year), top view" loading="lazy"></button></div>
+          <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #84 (this year), top view"><img src="img/car84-top.jpg" alt="Car #84 (this year), top view" loading="lazy"></button></div>
+        </div>
+        <div class="view-row v-angle">
+          <span class="label">Rear three-quarter</span>
+          <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #115 (last year), rear three-quarter view"><img src="img/car115-rear-angle.jpg" alt="Car #115 (last year), rear three-quarter view" loading="lazy"></button></div>
+          <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #84 (this year), rear three-quarter view"><img src="img/car84-rear-angle.jpg" alt="Car #84 (this year), rear three-quarter view" loading="lazy"></button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="experience">
+    <div class="sec-head"><h2>Experience</h2><span class="label">Sheet 03</span></div>
+    <div class="sec-body roles">
+      <div class="role">
+        <div class="when">Sep 2025 – Present<br>Columbia, MO</div>
+        <div>
+          <h3>Aerodynamics &amp; Composites Lead · Mizzou Racing Formula SAE</h3>
+          <ul>
+            <li>Design aerodynamic components using CFD in Star-CCM+ and analyze them with FEA.</li>
+            <li>Moving the team's Star-CCM+ workflow onto the university's Hellbender supercomputer: Design Manager parameter sweeps run on the cluster, and post-processing runs automatically as soon as each sim finishes, replacing the old local-only process.</li>
+            <li>Created a Star-CCM+ simulation template that makes setting up new sims faster and more consistent.</li>
+            <li>Delegate and manage subteam tasks alongside team management.</li>
+            <li>Train new members in aerodynamic design and composite manufacturing.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="role">
+        <div class="when">Sep 2024 – Present<br>Columbia, MO</div>
+        <div>
+          <h3>Student Technical Assistant · Mizzou 3D Print Lab</h3>
+          <ul>
+            <li>Operate and maintain FDM, SLA and SLS printers to keep the lab running reliably.</li>
+            <li>Design custom models and technical drawings in SolidWorks to client specifications.</li>
+            <li>Tune slicer parameters for dimensional accuracy.</li>
+            <li>Run lab operations when the supervisor is out, handling requests and scheduling print jobs.</li>
+          </ul>
+          <div class="gallery role-photo">
+            <button type="button" class="lead" data-cap="Large-format printer in the Mizzou 3D Print Lab"><img src="img/printlab-printer.jpg" alt="Large-format printer in the Mizzou 3D Print Lab" loading="lazy"></button>
+          </div>
+        </div>
+      </div>
+      <div class="role">
+        <div class="when">Jun 2026 – Present<br>Columbia, MO</div>
+        <div>
+          <h3>Makerspace Committee Member · Mizzou College of Engineering</h3>
+          <ul>
+            <li>Sole student voice on a committee of engineering faculty.</li>
+            <li>Inventoried the 3D print room's materials and set how resources are allocated.</li>
+            <li>Founding member of the makerspace and its student management group.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="photos">
+    <div class="sec-head"><h2>Photos</h2><span class="label">Sheet 04</span></div>
+    <div class="sec-body">
+          <div class="gallery wall">
+            <button type="button" data-cap="Tuft testing on the car"><img src="img/tufts-car.jpg" alt="Tuft testing on the car" loading="lazy"></button>
+            <button type="button" data-cap="Tufts on the rear wing"><img src="img/tufts-rear-wing.jpg" alt="Tufts on the rear wing" loading="lazy"></button>
+            <button type="button" data-cap="Tufts on a part in the shop"><img src="img/tufts-endplate.jpg" alt="Tufts on a part in the shop" loading="lazy"></button>
+            <button type="button" data-cap="Composite part in the Mizzou Racing shop"><img src="img/nosecone-fiberglass-plug.jpg" alt="Composite part in the Mizzou Racing shop" loading="lazy"></button>
+            <button type="button" data-cap="Carbon layup before trimming"><img src="img/layup-untrimmed.jpg" alt="Carbon layup before trimming" loading="lazy"></button>
+            <button type="button" data-cap="3D printed molds with filled seams"><img src="img/printed-molds-grey.jpg" alt="3D printed molds with filled seams" loading="lazy"></button>
+          </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="skills">
+    <div class="sec-head"><h2>Skills</h2><span class="label">Sheet 05</span></div>
+    <div class="sec-body skills">
+      <div>
+        <h4>CAD &amp; Analysis</h4>
+        <div class="tags">
+          <span class="tag">SolidWorks</span>
+          <span class="tag">Star-CCM+</span>
+          <span class="tag">FEA</span>
+          <span class="tag">AutoCAD</span>
+          <span class="tag">MATLAB</span>
+          <span class="tag">MS Office</span>
+          <span class="tag">KiCad</span>
+          <span class="tag">PCB design</span>
+        </div>
+      </div>
+      <div>
+        <h4>Fabrication</h4>
+        <div class="tags">
+          <span class="tag">Carbon fiber layup</span>
+          <span class="tag">3D printing: FDM / SLA / SLS</span>
+          <span class="tag">Laser cutting</span>
+          <span class="tag">Waterjet</span>
+          <span class="tag">Soldering</span>
+        </div>
+      </div>
+      <div>
+        <h4>Leadership</h4>
+        <ul>
+          <li>Training new members</li>
+          <li>Task delegation</li>
+          <li>Cross-team communication</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet" id="contact">
+    <div class="sec-head"><h2>Contact</h2><span class="label">Sheet 06</span></div>
+    <div class="sec-body">
+      <p style="margin:0">I'm looking for full-time mechanical engineering roles starting after I graduate in May 2027.</p>
+      <div class="links">
+        <span>Email: <a href="mailto:ldaniel2004@gmail.com">ldaniel2004@gmail.com</a></span>
+        <a href="https://www.linkedin.com/in/leo-daniel-70816828b">LinkedIn</a>
+        <a href="Leo_Daniel_Resume.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>Leo Daniel · Columbia, MO · 2026</footer>
+</main>
+
+<dialog class="lightbox" id="lightbox" aria-label="Enlarged photo">
+  <img id="lb-img" alt="">
+  <div class="lb-bar"><span id="lb-cap"></span><button type="button" id="lb-close">Close</button></div>
+</dialog>
+<script>
+(function () {
+  var dlg = document.getElementById('lightbox');
+  var img = document.getElementById('lb-img');
+  var cap = document.getElementById('lb-cap');
+  document.querySelectorAll('.gallery button, .shot-btn').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var i = b.querySelector('img');
+      img.src = i.src; img.alt = i.alt; cap.textContent = b.dataset.cap;
+      if (dlg.showModal) dlg.showModal();
+    });
+  });
+  document.getElementById('lb-close').addEventListener('click', function () { dlg.close(); });
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+})();
+</script>
+</body>
+</html>
