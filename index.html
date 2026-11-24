@@ -151,10 +151,12 @@ dialog.lightbox .lb-bar button { font: 500 0.8rem var(--font-mono); background: 
 .shot-btn img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: 100%; object-fit: contain; display: block; }
  
 .views { display: grid; gap: 16px; }
-.views-head { display: grid; grid-template-columns: 7rem minmax(0,1fr) minmax(0,1fr); gap: 16px; border-bottom: 1.5px solid var(--ink); padding-bottom: 8px; }
+.views-head { display: grid; grid-template-columns: minmax(0,1fr) 9rem minmax(0,1fr); gap: 16px; border-bottom: 1.5px solid var(--ink); padding-bottom: 8px; }
 .views-head strong { font: 600 1.1rem/1 var(--font-display); text-transform: uppercase; letter-spacing: 0.04em; }
-.views-head strong.now { color: var(--accent); }
-.view-row { display: grid; grid-template-columns: 7rem minmax(0,1fr) minmax(0,1fr); gap: 16px; align-items: center; }
+.views-head strong.now { color: var(--accent); text-align: right; }
+.views-head > .label, .view-row > .label { text-align: center; }
+.view-row > .label { font: 600 1.05rem/1.1 var(--font-display); letter-spacing: 0.06em; color: var(--ink); }
+.view-row { display: grid; grid-template-columns: minmax(0,1fr) 9rem minmax(0,1fr); gap: 16px; align-items: center; }
 .view-row .shot-frame { border: 1px solid var(--line); }
 .view-row.v-side .shot-frame { aspect-ratio: 2.4 / 1; }
 .view-row.v-front .shot-frame, .view-row.v-rear .shot-frame { aspect-ratio: 4 / 3; }
@@ -162,9 +164,9 @@ dialog.lightbox .lb-bar button { font: 500 0.8rem var(--font-mono); background: 
 .view-row.v-top .shot-frame { aspect-ratio: 3 / 4; max-height: 520px; justify-self: center; width: 100%; }
 @media (max-width: 760px) {
   .views-head { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
-  .views-head > :first-child { display: none; }
+  .views-head > .label { display: none; }
   .view-row { grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 8px; }
-  .view-row > .label { grid-column: 1 / -1; }
+  .view-row > .label { grid-column: 1 / -1; grid-row: 1; }
 }
 .changes { border-top: 1.5px solid var(--ink); }
 .change { display: grid; grid-template-columns: 2.5rem 1.2fr 1.6fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); align-items: start; }
@@ -463,30 +465,30 @@ footer { font: 0.75rem var(--font-mono); color: var(--muted); text-align: right;
         </div>
       </div>
       <div class="views">
-        <div class="views-head"><span class="label">View</span><strong>Last year · #115</strong><strong class="now">This year · #84</strong></div>
+        <div class="views-head"><strong>Last year · #115</strong><span class="label">View</span><strong class="now">This year · #84</strong></div>
         <div class="view-row v-front">
-          <span class="label">Front</span>
           <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #115 (last year), front view"><img src="img/car115-front.jpg" alt="Car #115 (last year), front view" loading="lazy"></button></div>
+          <span class="label">Front</span>
           <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #84 (this year), front view"><img src="img/car84-front.jpg" alt="Car #84 (this year), front view" loading="lazy"></button></div>
         </div>
         <div class="view-row v-side">
-          <span class="label">Side</span>
           <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #115 (last year), side view"><img src="img/car115-side.jpg" alt="Car #115 (last year), side view" loading="lazy"></button></div>
+          <span class="label">Side</span>
           <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #84 (this year), side view"><img src="img/car84-side.jpg" alt="Car #84 (this year), side view" loading="lazy"></button></div>
         </div>
         <div class="view-row v-rear">
-          <span class="label">Rear</span>
           <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #115 (last year), rear view"><img src="img/car115-back.jpg" alt="Car #115 (last year), rear view" loading="lazy"></button></div>
+          <span class="label">Rear</span>
           <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #84 (this year), rear view"><img src="img/car84-rear.jpg" alt="Car #84 (this year), rear view" loading="lazy"></button></div>
         </div>
         <div class="view-row v-top">
-          <span class="label">Top</span>
           <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #115 (last year), top view"><img src="img/car115-top.jpg" alt="Car #115 (last year), top view" loading="lazy"></button></div>
+          <span class="label">Top</span>
           <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #84 (this year), top view"><img src="img/car84-top.jpg" alt="Car #84 (this year), top view" loading="lazy"></button></div>
         </div>
         <div class="view-row v-angle">
-          <span class="label">Rear three-quarter</span>
           <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #115 (last year), rear three-quarter view"><img src="img/car115-rear-angle.jpg" alt="Car #115 (last year), rear three-quarter view" loading="lazy"></button></div>
+          <span class="label">Rear three-quarter</span>
           <div class="shot-frame has-img"><button type="button" class="shot-btn" data-cap="Car #84 (this year), rear three-quarter view"><img src="img/car84-rear-angle.jpg" alt="Car #84 (this year), rear three-quarter view" loading="lazy"></button></div>
         </div>
       </div>
